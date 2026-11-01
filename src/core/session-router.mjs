@@ -57,17 +57,18 @@ const ALL_MODES = Object.freeze([...SIMULATION_MODES, 'simulation', 'closed-agen
  * closed preset; simulation allows simulator presets. A typo or stale config
  * cannot attach an unexpected tool surface.
  *
- * Canonical `simulation` uses the bridge-specific preset names and defaults to
- * `bridge-sim`. Legacy spellings retain the currently installed `qq-chat` /
- * `qq-chat-v2` mappings, so a generation mismatch remains a configuration error.
+ * Canonical `simulation` uses the currently installed `qq-chat-v2` preset; legacy
+ * spellings retain the `qq-chat` / `qq-chat-v2` mappings, so a generation
+ * mismatch remains a configuration error. `closed-agent` uses the DSH built-in
+ * `standard` preset because it intentionally has the full local tool surface.
  * Deployments with different preset names can override the table below.
  */
 const DEFAULT_MODE_PRESETS = Object.freeze({
   chat: Object.freeze(['qq-chat']),
   reserved: Object.freeze(['qq-chat']),
   reserved2: Object.freeze(['qq-chat-v2']),
-  simulation: Object.freeze(['bridge-sim', 'bridge-sim-v2', 'qq-chat-v2']),
-  'closed-agent': Object.freeze(['bridge-closed']),
+  simulation: Object.freeze(['qq-chat-v2']),
+  'closed-agent': Object.freeze(['standard']),
 });
 
 /**
@@ -379,7 +380,7 @@ export function migrateLegacyMode({ mode, ownerQQ, modePresets } = {}) {
  * migration: behaviour for conversations without an override is unchanged.
  * The legacy spellings are accepted here (`reserved2` is what the running bridge
  * still has persisted) and are stored in canonical form — storing the raw
- * spelling would pair e.g. `reserved2` with the canonical `bridge-sim` preset and
+ * spelling would pair e.g. `reserved2` with the canonical `qq-chat-v2` preset and
  * then reject that same state on the next load, i.e. the router could not read
  * back what it had just written.
  */
