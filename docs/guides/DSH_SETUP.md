@@ -2,6 +2,8 @@
 
 `qq-bridge` 仓库本身包含桥接、控制台和插件，但 **DSH 端的两个聊天模式（`qq-chat` / `qq-chat-v2`）以及 MCP 挂载** 不在仓库根目录，需要通过本说明安装到目标设备的 DSH 环境中。
 
+> **上游行为标注**：本文中的 `[Hook]`、进程枚举、PID/pipe 等均为 SnowLuma 接入日志字段；qq-bridge 不注入、不挂钩、不修改 SnowLuma 本体。
+
 ## 兼容范围
 
 桌面版端口自动发现默认开启。多实例或固定端点部署可将 `config.json` 的
@@ -118,10 +120,10 @@
 - **启动时先出现「连接断开（1006）」随后恢复**：部分 SnowLuma 部署会为 HTTP 与 WS 使用不同令牌，而 `config.json` 的 `snowluma.accessToken` 只显式保存一个值。首次 WS 连接可能因此失败，再由桥接从 `snowluma.homeDir` 的 `config/onebot_<QQ号>.json` 发现对应令牌并重连。仅在这条自愈链路成功时，短暂 1006 属于预期现象；如果持续失败或收不到消息，则需检查令牌和 `homeDir`，不能一概视为正常。
 - **QQ 上毫无反应，但桥接日志说「SnowLuma 已连接」**：已连接只表示 WebSocket 建立，不能证明 QQ 数据链路正常，可能是上游接入层（SnowLuma 的 `[Hook]`）未收到数据，也可能是桥接配置或会话路由问题，应按以下顺序排查。
   1. 打开控制台「运行总览」，看 **`SnowLuma 上游`** 卡片：`已连接 · 未接收` 表示连接存在但未收到上游数据；「访问与安全」页会有对应告警条与处置建议。`GET /api/status` 的 `snowluma` 字段（`degraded` / `good` / `hint`）给的是同一份判断。
-  2. 去看 **SnowLuma 自己的上游接入日志** `logs/snowluma-*.log`，搜 `[Hook]`：
-     - `receive path stale: … reporting good=false` —— 收不到数据（会自愈，也可能不自愈）
-     - `process enumeration timed out after 4000ms` —— 连 QQ 进程都枚举不到
-     - 正常应有 `login detected: PID=…` + `pipe connected: PID=…`
+  2. 去看 **SnowLuma 自己的接入日志** `logs/snowluma-*.log`，搜 `[Hook]`（以下均为 SnowLuma 日志字段）：
+     - `receive path stale: … reporting good=false` —— 日志：收不到数据（会自愈，也可能不自愈）
+     - `process enumeration timed out after 4000ms` —— 日志：连 QQ 进程都枚举不到
+     - 正常应有 `login detected: PID=…` + `pipe connected: PID=…` —— 日志字段
   3. 再核对白名单、DSH 会话与桥接日志，排除本项目的配置问题。是否升级 SnowLuma 应根据其发布说明判断；本项目只读取本机接入配置与上游健康状态，不部署、不修改上游本体。历史核验仅证明 **1.14.9 与 1.14.20** 的原生组件相同，因此那次版本升级不能修复原生 hook 挂载问题，不能推广为所有版本的结论（见 [DSH 0.2.0 适配记录](DSH_020_ADAPTATION.md)）。
   4. 顺带确认 QQ 客户端本身是登录状态、没有被顶号；SnowLuma **1.14.20** 已验证会通过 `bot_status` 事件报告账号上下线，桥接日志会记录「QQ 账号会话已离线」。
   > 桥接自身不包含原生注入组件，也不启动或控制 SnowLuma / QQ；遇到上游接入失败应先检查 SnowLuma 日志，而不是直接归因于桥接。
