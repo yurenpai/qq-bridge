@@ -46,7 +46,7 @@ DSH/                         ← 工作区根（不是仓库根）
 | `console-ui-*` | 控制台离线预览、fixture 和 API 基线；说明见 [CONSOLE-UI-TESTING](guides/CONSOLE-UI-TESTING.md) |
 | `setup-*.mjs` | DSH 插件、preset 与 MCP 的幂等安装 |
 | `verify-*.mjs` | DSH 适配和 persona 一致性检查 |
-| `probe-*.mjs` | 按需读取真实 DSH / SnowLuma 能力；可能连接本机服务，不属于纯离线套件 |
+| `probe-*.mjs` | 本机兼容性检查，鉴权路径以各脚本为准（部分使用 `probe-auth.mjs`）。`probe-snowluma-heartbeat` 只读；`probe-020-settings` 将读取的 mode 原值写回以验证写入路径；`probe-020-protocol` 会创建测试会话 / 工作区，结束后归档会话、删除工作区并清理临时目录。可能连接真实本机服务，不属于纯离线套件 |
 | `scan-*.mjs` | 工具名、依赖或其他静态对账 |
 | `privacy-scan.mjs` | 工作树与历史隐私扫描；本地规则模板为 `privacy-rules.example.json` |
 | `patch-*.mjs` | 兼容性修补。`patch-snowluma-sdk.mjs` 是 `postinstall` 依赖，不能当作一次性脚本删除 |

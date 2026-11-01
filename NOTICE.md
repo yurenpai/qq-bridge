@@ -60,7 +60,7 @@ GitHub 的许可识别清单不包含 PolyForm 系列（2026-10-30 核验：`GET
 | --- | --- | --- |
 | [`@deepseek-ai/dsh`](https://github.com/deepseek-ai/deepseek-harness) 及 `@deepseek-ai/*` 各包 | MIT | DeepSeek Harness 本体与官方 API 客户端 |
 | [`@snowluma/sdk`](https://www.npmjs.com/package/@snowluma/sdk)、[`@snowluma/mcp`](https://www.npmjs.com/package/@snowluma/mcp) | 声明为 `SEE LICENSE IN LICENSE`，发布包内未附许可文件（见 2.2） | 经 npm 依赖使用 |
-| [SnowLuma](https://github.com/SnowLuma/SnowLuma) 本体 | 源码可见的非商业许可（非 OSI 开源许可） | 本软件不在仓库内包含或分发其源码与二进制，仅经 OneBot v11 协议通信（另只读其 `config/onebot_*.json` 以发现 token） |
+| [SnowLuma](https://github.com/SnowLuma/SnowLuma) 本体 | 源码可见的非商业许可（非 OSI 开源许可） | 本软件不在仓库内包含或分发其源码与二进制，仅经 OneBot v11 协议通信；并在本机读取安装目录下 `config/onebot_*.json` 中的接入令牌，令牌仅用于连接相应的 OneBot 地址 |
 | `@modelcontextprotocol/sdk`、`js-yaml`、`zod` 等 | MIT / ISC | 见各自包内 LICENSE |
 
 ### 2.2 `@snowluma/sdk` 与 `@snowluma/mcp` 的许可状态
@@ -103,8 +103,9 @@ qq-bridge 是独立维护的第三方工具，不是 SnowLuma 的子项目；qq-
 
 ### 3.2 互操作性质
 
-本软件不在仓库内包含或分发 SnowLuma 的源码与二进制，仅通过 OneBot v11 协议与其通信，
-并只读其 `config/onebot_*.json` 以发现账号 token。本软件不是 SnowLuma 的修改版或衍生版本。
+本软件不在仓库内包含或分发 SnowLuma 的源码与二进制，仅通过 OneBot v11 协议与其通信。
+它会在本机读取安装目录下的 `config/onebot_*.json`，从已有账号配置中寻找当前可用的接入令牌，
+并只将令牌用于连接相应的 OneBot 地址。本软件不是 SnowLuma 的修改版或衍生版本。
 
 ### 3.3 条款对照
 

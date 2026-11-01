@@ -7,6 +7,8 @@ qq-bridge 是一个本地消息桥接工具，在 SnowLuma 提供的 **OneBot v1
 > [!IMPORTANT]
 > **qq-bridge 是独立维护的第三方工具，不是 SnowLuma 的子项目，也不隶属于 SnowLuma、DeepSeek 或腾讯 / QQ。**
 > 本项目通过 SnowLuma 提供的 **OneBot v11 接口**互通；桥接与 SnowLuma 后端分别部署、独立维护，无隶属、合作或背书关系。OneBot v11 是公开协议，并非 SnowLuma 专有协议。
+>
+> **术语与边界**：本项目不向 QQ 客户端或 SnowLuma 进程注入、挂钩，不修改 SnowLuma 本体或其原生组件；但会读取本机 OneBot 配置与接入令牌、连接 OneBot 接口，并在 `npm install` 时修补本机 `@snowluma/sdk` 的 ESM 导入。文档中的“人格注入”指提示词写入，“提示注入”指不可信内容攻击；上游 `[Hook]` 仅指 SnowLuma 的接入机制，不是本项目的行为。
 
 ```text
 QQ ↔ SnowLuma ↔ qq-bridge ↔ DeepSeek Harness ↔ 模型服务

@@ -1,6 +1,6 @@
 # 安全策略
 
-qq-bridge 会接触真实的 QQ 账号凭据、OneBot 网关令牌、DSH 会话 Cookie 与控制台令牌，
+qq-bridge 会接触本机 OneBot 接入令牌、DSH 会话 Cookie 与控制台令牌，
 并把群聊内容交给大模型处理。**请按"能读你账号"的标准对待本程序的任何权限缺口。**
 
 ---
@@ -61,7 +61,7 @@ qq-bridge 会接触真实的 QQ 账号凭据、OneBot 网关令牌、DSH 会话 
 
 ## English summary
 
-This project handles real QQ account credentials, OneBot tokens, and DSH session cookies. Please
+This project handles local OneBot access tokens and DSH session cookies. Please
 report security issues **privately** via
 [GitHub Security Advisories](https://github.com/Derpyu520/qq-bridge/security/advisories/new) —
 never in a public issue, and never with live tokens or real QQ numbers.

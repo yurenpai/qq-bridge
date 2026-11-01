@@ -7,6 +7,8 @@ A local message bridge that forwards message events and AI replies between the *
 > [!IMPORTANT]
 > **qq-bridge is independently maintained. It is not a SnowLuma subproject and is not affiliated with SnowLuma, DeepSeek, or Tencent / QQ.**
 > It communicates through the **OneBot v11 interfaces** exposed by SnowLuma. The bridge and the SnowLuma backend are deployed and maintained independently, without affiliation, partnership, or endorsement. OneBot v11 is a public protocol, not a proprietary SnowLuma protocol.
+>
+> **Terminology and boundaries**: qq-bridge does not inject into or hook the QQ or SnowLuma processes, and does not modify SnowLuma itself or its native components. It does read local OneBot configuration and access tokens, connects to the OneBot interfaces, and patches the local `@snowluma/sdk` installation for ESM imports during `npm install`. “Persona injection” means adding text to prompts, while “prompt injection” means attacks from untrusted content. Upstream `[Hook]` entries refer only to SnowLuma's integration mechanism, not to qq-bridge.
 
 ```text
 QQ ↔ SnowLuma ↔ qq-bridge ↔ DeepSeek Harness ↔ Model provider
